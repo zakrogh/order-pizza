@@ -4,6 +4,9 @@
 .total{
   font-size: 20px;
 }
+.jumbotron{
+  background-color: rgba(91,192,222, 0.2);
+}
 body{
   background-color: rgba(0, 0, 100, 0.1);
 }
