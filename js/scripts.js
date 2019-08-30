@@ -1,3 +1,4 @@
+//Business Logc
 function Order(){
   this.pizzas = [];
 }
@@ -6,13 +7,43 @@ function Order(){
 function Pizza(size, toppings){
   this.size = size;
   this.toppings = toppings;
+  this.price = this.calculatePrice();
 }
 
+//base price is $10, each topping is $2
 Pizza.prototype.calculatePrice = function (){
+  let price = 10.0;
+  switch(this.size){
+    case "Small":
+      price *= 1;
+      break;
+    case "Medium":
+      price *= 1.2;
+      break;
+    case "Large":
+      price *= 1.5;
+      break;
+    case "Extra Large":
+      price *= 2;
+      break;
+    case "Gigantic":
+      price *= 5
+      break;
+  }
+  price += this.toppings.length * 2;
+  return price;
+}
 
+var deletePizza = function(myOrder, num){
+  myOrder.pizzas.splice(num, 1);
 }
 
 //Front End Logic
+
+//This is kind of a mess but it essentially puts
+// the pizza info into a panel inside of a column
+// and then wraps that column in a row, making sure
+// that each row has 1-3 columns
 var displayOrder = function(myOrder){
   $(".orderpanel").show();
   $(".order").text("");
@@ -29,7 +60,8 @@ var displayOrder = function(myOrder){
     placeHolder += '<div class="col-md-4 column' + i + '">';
     placeHolder += '<div class="panel panel-info pizza' + i + '" id="pizza' + i + '">';
     placeHolder += '<div class="panel-heading heading' + i + '">' + "Pizza " + (i + 1) + '</div>';
-    placeHolder += '<div class="panel-body body' + i + '">' + "<strong>Toppings:</strong> " + listItems + '<br><strong></div>';
+    placeHolder += '<div class="panel-body body' + i + '">' + "<strong>Size:</strong> " + myOrder.pizzas[i].size + "<br><strong>Toppings:</strong> " + listItems + '<br><strong> Price:</strong> $'+ myOrder.pizzas[i].price +'</div>';
+    placeHolder += '<button class="btn btn-warning deletebutton delete' + i + '">Delete</button>';
     placeHolder += '</div></div>';
     $(".order").append(placeHolder);
     if((i % 3) === 0 && i > 0){
@@ -51,14 +83,24 @@ var displayOrder = function(myOrder){
   }
 }
 var clearForm = function(){
-  $("#pizzasize").val("small");
+  $("#pizzasize").val("Small");
   $.each($("input[name='topping']:checked"), function (){
     $(this).prop("checked", false);
   })
 }
+function attachPizzaListeners(myOrder) {
+  //delete button logic for deleting pizzas
+  $(".order").on("click", ".deletebutton", function() {
+    let classArray = this.className.split("");
+    pizzaToDelete = classArray[classArray.length - 1];
+    deletePizza(myOrder, pizzaToDelete);
+    displayOrder(myOrder);
+  });
+};
 
 $(document).ready(function(){
   var myOrder = new Order();
+  attachPizzaListeners(myOrder);
   $("#buildpizza").click(function(){
     $(".modal").modal();
   });
