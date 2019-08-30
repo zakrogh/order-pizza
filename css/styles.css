@@ -1,6 +1,9 @@
 .orderpanel{
   display: none;
 }
+.total{
+  font-size: 20px;
+}
 body{
   background-color: rgba(0, 0, 100, 0.1);
 }

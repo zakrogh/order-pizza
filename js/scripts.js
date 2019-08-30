@@ -81,6 +81,11 @@ var displayOrder = function(myOrder){
       $(".column0").wrap('<div class="row"></div>');
     }
   }
+  let total = 0;
+  for(let i = 0; i < myOrder.pizzas.length; i++){
+    total += myOrder.pizzas[i].price;
+  }
+  $(".total").text("Your Total is: $" + total);
 }
 var clearForm = function(){
   $("#pizzasize").val("Small");
