@@ -14,8 +14,8 @@ _This site allows the user to add customized pizzas to an order. The pizzas are 
 
 ## Project Specifications
 
-* _User's are able to add a pizza to their order_
-* _User's are able to select a size for their pizza via a <select> tag_
+* _User's are able to add a pizza to their order._
+* _User's are able to select a size for their pizza via a select tag_
 * _User's are able to add toppings to their pizza by checking checkboxes_
 * _The user's order is displayed and updated when a pizza is added_
 * _Each pizza contains a delete button that will remove the selected pizza from the order._
